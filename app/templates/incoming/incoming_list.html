@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form class="col-lg-4 mx-auto"
+    method="get">
+    <input class="form-control rounded-4"
+        type="text"
+        name="q"
+        placeholder="Search..."
+        value="{{ request.GET.q }}">
+    <br>
+    <div class="text-end">
+        <button class="btn btn-dark px-5 rounded-4"
+            type="submit">Search</button>
+    </div>
+</form>
+<a class="btn btn-dark"
+    href="{% url 'incoming-create' %}">Add new</a>
+<hr>
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Subject</th>
+            <th scope="col">From</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for incoming in object_list %}
+
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><a href="{{incoming.get_absolute_url}}">
+                    {{ incoming.subject }}</a></td>
+            <td>{{ incoming.rfrom }}</td>
+        </tr>
+        {% empty %}
+        <li>No incoming correspondences found.</li>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% if page_obj %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
+
+{% endblock content %}

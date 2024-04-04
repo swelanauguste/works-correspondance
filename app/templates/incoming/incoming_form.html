@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h1>{% if form.instance.pk %}
+        Update Incoming {{ form.instance.pk }}
+        {% else %}
+        Create Incoming
+        {% endif %}
+    </h1>
+    <hr>
+    <form class="col-lg-4 mx-auto"
+        method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="text-end">
+            <button type="submit"
+                class="btn btn-dark">Save</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

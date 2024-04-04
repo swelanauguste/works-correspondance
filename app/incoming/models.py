@@ -26,6 +26,7 @@ class Incoming(models.Model):
     )
     forward = models.CharField(max_length=100, null=True, blank=True)
     notes = models.TextField(blank=True)
+    file = models.FileField(upload_to="incoming/files/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -42,7 +43,7 @@ class Incoming(models.Model):
         null=True,
         related_name="incoming_updated_by",
     )
-    
+
     class Meta:
         ordering = ["-created_at"]
 

@@ -15,6 +15,7 @@ class IncomingForm(forms.ModelForm):
     class Meta:
         model = Incoming
         fields = (
+            "file",
             "subject",
             "received",
             "dated",

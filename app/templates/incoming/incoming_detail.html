@@ -29,6 +29,13 @@
                     </p>
                 </div>
             </div>
+            <hr>
+            {% if incoming.file %}
+            <p><strong>File:</strong> <a target="_new"
+                    href="{{ incoming.file.url }}">{{ incoming.file.name }}</a>
+            </p>
+            {% endif %}
+
             <div class="text-end me-4">
                 <a class="btn btn-dark me-3"
                     href="{% url 'incoming-update' incoming.pk %}">Edit</a>

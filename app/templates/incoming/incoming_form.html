@@ -12,7 +12,8 @@
     </h1>
     <hr>
     <form class="col-lg-4 mx-auto"
-        method="post">
+        method="post"
+        enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="text-end">

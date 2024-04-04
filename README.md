@@ -1,2 +1,2 @@
-# works-correspondance
-handling correspondance
+# works-correspondence
+handling correspondence

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load humanize %} 
+
 {% block content %}
 
 <form class="col-lg-4 mx-auto"
@@ -17,8 +19,8 @@
 </form>
 <a class="btn btn-dark"
     href="{% url 'outgoing-create' %}">Add new</a>
-<div class="ms-5 float-end">
-    {{data_count}}
+<div class="fw-bold fs-5 float-end">
+    {{data_count|intcomma}}
 </div>
 <hr>
 <div class="table responseive">

@@ -12,13 +12,13 @@
 # fi
 
 # python manage.py makemigrations --merge
-python manage.py migrate
+# python manage.py migrate
 python manage.py makemigrations
 python manage.py migrate
-python manage.py createsuperuser --username cworks --email ict.infrastructure@govt.lc --no-input
-python manage.py upload_data static/docs/INCOMING.xlsx
-python manage.py add_outgoing_data static/docs/OUTGOING.xlsx
-python manage.py collectstatic --no-input
+# python manage.py createsuperuser --username cworks --email ict.infrastructure@govt.lc --no-input
+# python manage.py upload_data static/docs/INCOMING.xlsx
+# python manage.py add_outgoing_data static/docs/OUTGOING.xlsx
+# python manage.py collectstatic --no-input
 
 
 

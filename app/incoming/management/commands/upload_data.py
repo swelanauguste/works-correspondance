@@ -17,6 +17,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         file_path = kwargs["file_path"]
         df = pd.read_excel(file_path)
+        
+        incoming_list = []
 
         # for index, row in df.head(5).iterrows():
         for index, row in df.iterrows():
@@ -48,7 +50,7 @@ class Command(BaseCommand):
             else:
                 date_received_obj = None
 
-            incoming, created = Incoming.objects.get_or_create(
+            incoming_obj = Incoming(
                 subject=row.get("SUBJECT"),
                 received=date_received_obj,
                 dated=lettdate_obj,
@@ -59,9 +61,7 @@ class Command(BaseCommand):
                 date=date_obj,
                 # Add other fields as necessary
             )
-            if created:
-                self.stdout.write(self.style.SUCCESS(f"Added {incoming}"))
-            else:
-                self.stdout.write(self.style.WARNING(f"{incoming} already exists"))
+            incoming_list.append(incoming_obj)
+        Incoming.objects.bulk_create(incoming_list)
 
         self.stdout.write(self.style.SUCCESS("Data imported successfully"))

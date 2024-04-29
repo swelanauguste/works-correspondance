@@ -46,7 +46,6 @@ class Command(BaseCommand):
                 cc=row.get("CC"),
                 hand=row.get("hand"),  # Directly assign action as CharField
                 r_mail=row.get("mail"),
-                fax=row.get("fax"),
                 # Add other fields as necessary
             )
             if created:

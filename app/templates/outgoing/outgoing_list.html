@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form class="col-lg-4 mx-auto"
+    method="get">
+    <input class="form-control rounded-4"
+        type="text"
+        name="q"
+        placeholder="Search..."
+        value="{{ request.GET.q }}">
+    <br>
+    <div class="text-end">
+        <button class="btn btn-dark px-5 rounded-4"
+            type="submit">Search</button>
+    </div>
+</form>
+<a class="btn btn-dark"
+    href="{% url 'outgoing-create' %}">Add new</a>
+<div class="ms-5 float-end">
+    {{data_count}}
+</div>
+<hr>
+<div class="table responseive">
+    <table class="table table-sm table-hover small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Subject</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">CC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for outgoing in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a class="text-dark"
+                        href="{{outgoing.get_absolute_url}}">
+                        {{ outgoing.subject|upper|truncatechars:70 }}</a></td>
+                <td>{{ outgoing.out_from|upper }}</td>
+                <td>{{ outgoing.to|default_if_none:'-'|upper }}</td>
+                <td>{{ outgoing.cc|default_if_none:'-'|upper }}</td>
+            </tr>
+            {% empty %}
+            <li>No outgoing correspondences found.</li>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
+
+{% endblock content %}

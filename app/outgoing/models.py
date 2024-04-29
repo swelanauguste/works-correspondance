@@ -1,21 +1,17 @@
 from django.db import models
+from users.models import User
+from django.urls import reverse
 
 class Outgoing(models.Model):
-    subject = models.CharField(max_length=100)
-    sent = models.DateField(blank=True, null=True)
-    dated = models.DateField(blank=True, null=True)
-    rfrom = models.CharField(max_length=100, verbose_name="from")
-    to = models.CharField(max_length=100, null=True, blank=True)
+    date_typed = models.DateField(blank=True, null=True)
+    out_date = models.DateField(blank=True, null=True, verbose_name="outgoing date")
+    out_from = models.CharField(max_length=100, verbose_name="from")
+    to = models.CharField(max_length=100, verbose_name="to")
+    subject = models.CharField(max_length=255)
     cc = models.CharField(max_length=100, null=True, blank=True)
-    action = models.ForeignKey(
-        Action,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="outgoing_action",
-    )
-    forward = models.CharField(max_length=100, null=True, blank=True)
-    notes = models.TextField(blank=True)
+    hand = models.BooleanField(default=False, verbose_name="hand delivery")
+    r_mail = models.BooleanField(default=False, verbose_name="regular mail")
+    notes = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to="outgoing/files/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -35,7 +31,7 @@ class Outgoing(models.Model):
     )
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-out_date"]
 
     def get_absolute_url(self):
         return reverse("outgoing-detail", kwargs={"pk": self.pk})

@@ -22,8 +22,12 @@ class IncomingDetailView(DetailView):
 class IncomingListView(ListView):
     model = Incoming
     paginate_by = 50
-    
-    extra_context = {"data_count": Incoming.objects.count()}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["data_count"] = Incoming.objects.count()
+        return context
+
     def get_queryset(self):
         query = self.request.GET.get("q")
         if query:

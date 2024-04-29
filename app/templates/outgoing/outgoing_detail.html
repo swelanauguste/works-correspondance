@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-5">
+    <div class="bg-secondary bg-opacity-10 py-3 px-4 shadow rounded-4">
+        <h3>{{ outgoing.subject }}</h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Typed:</strong> {{ outgoing.date_typed }}</p>
+                <p><strong>Outing date:</strong> {{ outgoing.out_date }}</p>
+                <p><strong>From:</strong> {{ outgoing.out_from|upper }}</p>
+                <p><strong>To:</strong> {{ outgoing.to|upper }}</p>
+                <p><strong>CC:</strong> {{ outgoing.cc|upper }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Hand delivered:</strong> {{ outgoing.hand|yesno:"yes,no,maybe"|title }}</p>
+                <p><strong>Regular mail:</strong> {{ outgoing.r_mail|yesno:"yes,no,maybe"|title }}</p>
+                <p><strong>Created By:</strong> {{ outgoing.created_by }}
+                </p>
+                <p><strong>Notes:</strong> {{ outgoing.notes }}</p>
+
+            </div>
+        </div>
+
+        <hr>
+        {% if outgoing.file %}
+        <p><strong>File:</strong> <a target="_new"
+                href="{{ outgoing.file.url }}">{{ outgoing.file.name }}</a>
+        </p>
+        {% endif %}
+
+        <div class="text-end me-4 mb-4">
+            <a class="btn btn-dark me-3"
+                href="{% url 'outgoing-update' outgoing.pk %}">Edit</a>
+            <a class="btn btn-outline-dark"
+                href="">Delete</a>
+        </div>
+
+        <p class="small text-muted text-end"
+            title="created">{{ outgoing.created_at }}
+        </p>
+    </div>
+</div>
+{% endblock %}

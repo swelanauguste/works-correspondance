@@ -17,5 +17,7 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser --username cworks --email ict.infrastructure@govt.lc --no-input
 python manage.py collectstatic --no-input
+python manage.py upload_data static/docs/INCOMING.xlsx --no-input
+
 
 exec "$@"

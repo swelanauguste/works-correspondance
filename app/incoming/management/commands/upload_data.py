@@ -48,7 +48,7 @@ class Command(BaseCommand):
             else:
                 date_received_obj = None
 
-            Incoming.objects.create(
+            incoming, created = Incoming.objects.get_or_create(
                 subject=row.get("SUBJECT"),
                 received=date_received_obj,
                 dated=lettdate_obj,
@@ -59,5 +59,9 @@ class Command(BaseCommand):
                 date=date_obj,
                 # Add other fields as necessary
             )
+            if created:
+                self.stdout.write(self.style.SUCCESS(f"Added {incoming}"))
+            else:
+                self.stdout.write(self.style.WARNING(f"{incoming} already exists"))
 
         self.stdout.write(self.style.SUCCESS("Data imported successfully"))

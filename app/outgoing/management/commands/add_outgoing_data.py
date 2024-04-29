@@ -37,7 +37,7 @@ class Command(BaseCommand):
             else:
                 out_date_obj = None
 
-            Outgoing.objects.create(
+            outgoing, created = Outgoing.objects.get_or_create(
                 out_date=out_date_obj,
                 date_typed=date_typed_obj,
                 out_from=row.get("FROM"),
@@ -49,5 +49,9 @@ class Command(BaseCommand):
                 fax=row.get("fax"),
                 # Add other fields as necessary
             )
+            if created:
+                self.stdout.write(self.style.SUCCESS(f"Added {outgoing}"))
+            else:
+                self.stdout.write(self.style.WARNING(f"{outgoing} already exists"))
 
         self.stdout.write(self.style.SUCCESS("Data imported successfully"))

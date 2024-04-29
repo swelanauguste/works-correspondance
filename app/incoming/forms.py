@@ -1,13 +1,6 @@
 from django import forms
 
-from .models import Action, Incoming
-
-
-class ActionForm(forms.ModelForm):
-
-    class Meta:
-        model = Action
-        fields = ("name",)
+from .models import Incoming
 
 
 class IncomingForm(forms.ModelForm):

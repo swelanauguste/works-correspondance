@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .models import Action, Incoming
+from .models import Incoming
 
 admin.site.register(Incoming)
-admin.site.register(Action)

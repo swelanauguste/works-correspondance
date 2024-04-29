@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .forms import ActionForm, IncomingForm
+from .forms import IncomingForm
 from .models import Incoming
 
 
@@ -21,8 +21,9 @@ class IncomingDetailView(DetailView):
 
 class IncomingListView(ListView):
     model = Incoming
-    paginate_by = 10  # Optional: if you want to paginate the results
-
+    paginate_by = 50
+    
+    extra_context = {"data_count": Incoming.objects.count()}
     def get_queryset(self):
         query = self.request.GET.get("q")
         if query:
@@ -32,8 +33,7 @@ class IncomingListView(ListView):
                 | Q(to__icontains=query)
                 | Q(cc__icontains=query)
                 | Q(notes__icontains=query)
-                | Q(
-                    action__name__icontains=query
-                )  # Assuming action has a name field you want to search
+                | Q(action__icontains=query)
+                # Assuming action has a name field you want to search
             ).distinct()
         return super().get_queryset()

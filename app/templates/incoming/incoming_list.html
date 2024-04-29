@@ -17,30 +17,39 @@
 </form>
 <a class="btn btn-dark"
     href="{% url 'incoming-create' %}">Add new</a>
+<div class="ms-5 float-end">
+    {{data_count}}
+</div>
 <hr>
-<table class="table table-sm table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Subject</th>
-            <th scope="col">From</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for incoming in object_list %}
-
-        <tr>
-            <th scope="row">{{forloop.counter}}</th>
-            <td><a href="{{incoming.get_absolute_url}}">
-                    {{ incoming.subject }}</a></td>
-            <td>{{ incoming.rfrom }}</td>
-        </tr>
-        {% empty %}
-        <li>No incoming correspondences found.</li>
-        {% endfor %}
-    </tbody>
-</table>
-
+<div class="table responseive">
+    <table class="table table-sm table-hover small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Subject</th>
+                <th scope="col">From</th>
+                <th scope="col">Received</th>
+                <th scope="col">Dated</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for incoming in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a class="text-dark" href="{{incoming.get_absolute_url}}">
+                        {{ incoming.subject|upper|truncatechars:70 }}</a></td>
+                <td>{{ incoming.rfrom|upper }}</td>
+                <td>{{ incoming.received|default_if_none:'-' }}</td>
+                <td>{{ incoming.dated|default_if_none:'-' }}</td>
+                <td>{{ incoming.date|default_if_none:'-' }}</td>
+            </tr>
+            {% empty %}
+            <li>No incoming correspondences found.</li>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% if page_obj %}
 <div class="pagination">

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1 class="text-center">Search Documents</h1>
+<form class="d-flex"
+    method="GET"
+    action="{% url 'search-view' %}">
+    <div class="col-lg-6 col-12 mx-auto">
+        <input class="form-control form-control-lg border-dark rounded-4"
+            type="text"
+            name="q"
+            placeholder="Search..."
+            value="{{ query }}">
+    </div>
+    <button class="ms-5 btn btn-dark px-5 rounded-4"
+        type="submit">Search</button>
+</form>
+<br><hr>
+<h2>Outgoing Documents</h2>
+<ul>
+    {% for outgoing in outgoings %}
+    <li><a target="_blank"
+            href="{{outgoing.get_absolute_url}}">{{ outgoing.subject }}</a>
+    </li>
+    <br>
+    {% empty %}
+    <li>No outgoing documents found.</li>
+    {% endfor %}
+</ul>
+<h2>Incoming Documents</h2>
+<ul>
+    {% for incoming in incomings %}
+    <li><a target="_blank"
+            href="{{incoming.get_absolute_url}}">{{ incoming.subject }}</a>
+    </li><br>
+    {% empty %}
+    <li>No incoming documents found.</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

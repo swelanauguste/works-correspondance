@@ -22,6 +22,19 @@
                             href="{% url 'outgoing-list' %}">Outgoing</a>
                     </li>
                 </ul>
+                <form class="d-flex"
+                    role="search"
+                    method="GET"
+                    action="{% url 'search-view' %}">
+                    <input class="form-control me-2"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        name="q"
+                        value="{{query}}">
+                    <button class="btn btn-outline-success"
+                        type="submit">Search</button>
+                </form>
             </div>
         </div>
     </nav>

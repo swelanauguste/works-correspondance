@@ -12,7 +12,7 @@ services:
       - 80:8000
     env_file:
       - ./.env
-    restart: alawys
+    restart: always
     # depends_on:
     #   - db
 #   db:
